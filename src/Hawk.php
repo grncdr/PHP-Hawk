@@ -18,13 +18,15 @@ class Hawk {
 	public static function generateMac($secret = '', $params = array())
 	{
 		$default = array(
+            'version'   => 'hawk.1.header',
 			'timestamp' => time(),
 			'nonce'     => '',
 			'method'    => 'GET',
 			'path'      => '',
 			'host'      => '',
 			'port'      => 80,
-			'ext'       => null
+            '_blank_'   => '',
+            'ext'       => '',
 		);
 
 		// Only include the necessary parameters
@@ -36,23 +38,14 @@ class Hawk {
 			}
 		}
 
-		// Nuke the ext key if it isn't being used
-		if ($default['ext'] === null)
-		{
-			unset($default['ext']);
-		}
-
 		// Ensure the method parameter is uppercase
 		$default['method'] = strtoupper($default['method']);
 
 		// Generate the data string
-		$data = implode("\n", $default);
+		$data = implode("\n", $default) . "\n";
 
 		// Generate the hash
-		$hash = hash_hmac('sha256', $data, $secret);
-
-		// Return base64 value
-		return base64_encode($hash);
+		return base64_encode(hash_hmac('sha256', $data, $secret, true));
 	}
 
 	/**
