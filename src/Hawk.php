@@ -18,12 +18,13 @@ class Hawk {
 	public static function generateMac($secret = '', $params = array())
 	{
 		$default = array(
-			'timestamp'	=>	time(),
-			'method'	=>	'GET',
-			'path'	=>	'',
-			'host'	=>	'',
-			'port'	=>	80,
-			'ext'	=>	null
+			'timestamp' => time(),
+			'nonce'     => '',
+			'method'    => 'GET',
+			'path'      => '',
+			'host'      => '',
+			'port'      => 80,
+			'ext'       => null
 		);
 
 		// Only include the necessary parameters
@@ -77,7 +78,7 @@ class Hawk {
 		$params['method'] = $method;
 		$params['ext'] = (count($appData) > 0) ? http_build_query($appData) : null;
 		$params['timestamp'] = (isset($params['timestamp'])) ? $params['timestamp'] : time();
-		die(var_dump($params));
+		$params['nonce'] = base64_encode(openssl_random_psuedo_bytes(32));
 
 		// Generate the MAC address
 		$mac = self::generateMac($secret, $params);
@@ -85,6 +86,7 @@ class Hawk {
 		// Make the header string
 		$header = 'Hawk id="'.$key.'", ts="'.$params['timestamp'].'", ';
 		$header .= (isset($params['ext'])) ? 'ext="'.$params['ext'].'", ' : '';
+		$header .= 'nonce="' . $params['nonce'] . '", ';
 		$header .= 'mac="'.$mac.'"';
 
 		return $header;
