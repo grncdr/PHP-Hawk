@@ -69,7 +69,7 @@ class Hawk
         }
 
         $params['host']      = $url['host'];
-        $params['path']      = $url['path'] . (isset($url['query']) ? $url['query'] : '');
+        $params['path']      = $url['path'] . (isset($url['query']) ? '?' . $url['query'] : '');
         $params['method']    = $method;
         $params['ext']       = (count($appData) > 0) ? http_build_query($appData) : null;
         $params['timestamp'] = (isset($params['timestamp'])) ? $params['timestamp'] : time();
