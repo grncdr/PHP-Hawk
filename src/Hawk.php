@@ -3,7 +3,7 @@
  * A class to generate and parse Hawk authentication headers
  *
  * @author         Alex Bilbie    | www.alexbilbie.com | hello@alexbilbie.com
- * @author         Stephen Sugden | stephensugden.com  | hello@stephensugden.com
+ * @author         Stephen Sugden | stephensugden.com  | me@stephensugden.com
  * @copyright      Copyright (c) 2012, Alex Bilbie.
  * @license        http://www.opensource.org/licenses/mit-license.php
  * @link           http://alexbilbie.com
